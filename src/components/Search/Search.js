@@ -1,6 +1,8 @@
 import React, { Fragment, Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
+import { Card } from 'react-bootstrap'
+import moment from 'moment'
 
 class Search extends Component {
   constructor () {
@@ -23,7 +25,7 @@ class Search extends Component {
 
   handleSubmit = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story`,
+      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=10000`,
       method: 'GET'
     })
       .then(response => {
@@ -91,8 +93,15 @@ class Search extends Component {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
-
-            <a href={result.url}>{result.url ? result.title : ''}</a>
+            <Card className='mt-2 mb-3 shadow bg-white rounded'>
+              <Card.Body className=''>
+                <Card.Title>
+                  <a href={result.url}>{result.url ? result.title : ''}</a>
+                </Card.Title>
+                <p className='d-inline'>By {result.author}</p>
+                <p className='text-right font-italic' >{moment(result.created_at).format('MMMM Do, YYYY')} </p>
+              </Card.Body>
+            </Card>
           </div>)}
         </div>
       )
@@ -108,7 +117,6 @@ class Search extends Component {
                 className='form-control mb-2'
                 type="text"
                 placeholder="Enter your search"
-                value={this.state.searchBarInput}
                 onChange={this.handleChange}
               />
               <div className="row">
