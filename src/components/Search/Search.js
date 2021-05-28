@@ -97,6 +97,7 @@ class Search extends Component {
               <Card.Body className=''>
                 <Card.Title>
                   <a href={result.url}>{result.url ? result.title : ''}</a>
+                  <p className='url'>{result.url}</p>
                 </Card.Title>
                 <p className='d-inline'>By {result.author}</p>
                 <p className='text-right font-italic' >{moment(result.created_at).format('MMMM Do, YYYY')} </p>
@@ -116,7 +117,7 @@ class Search extends Component {
             <h1 className='mb-3'>Please enter your search</h1>
             <form className='form-inline mb-4'>
               <input
-                className='form-control col-10'
+                className='form-control col-8'
                 type="text"
                 placeholder="Enter your search"
                 value={this.state.searchBarInput}
@@ -125,21 +126,17 @@ class Search extends Component {
               {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmit}>Get search</button>}
               {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
               {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
-              <div className="row mt-3 mb-2">
-                <div className="col-4">
+              <div className="mt-3 mb-2">
+                <div className="mb-2">
                   <div className="list-group" id="list-tab" role="tablist">
                     <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach Story Title</a>
                     <a className={this.state.button === 'comment' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comment' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
-                    <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#/search" role="tab" aria-controls="messages">Messages</a>
-                    <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#/search" role="tab" aria-controls="settings">Settings</a>
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="d-flex align-items-center">
                   <div className="tab-content" id="nav-tabContent">
                     <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
                     <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
-                    <div className="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
-                    <div className="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
                   </div>
                 </div>
               </div>
