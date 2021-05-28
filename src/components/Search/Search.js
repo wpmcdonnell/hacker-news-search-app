@@ -31,26 +31,10 @@ class Search extends Component {
     })
       .then(response => {
         // axios response object contains a `data` key
-        // { data: { post: { title... }}}
         // setting the state will force a re-render
         this.setState({ result: response.data.hits, searched: true })
         console.log(response.data.hits)
         console.log(this.state.searchBarInput)
-      })
-      .catch(console.error)
-  }
-
-  handleSubmitAuthor = () => {
-    axios({
-      url: 'http://hn.algolia.com/api/v1/search?query=foo&tags=story',
-      method: 'GET'
-    })
-      .then(response => {
-        // axios response object contains a `data` key
-        // { data: { post: { title... }}}
-        // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true })
-        console.log(response.data.hits)
       })
       .catch(console.error)
   }
@@ -62,7 +46,6 @@ class Search extends Component {
     })
       .then(response => {
         // axios response object contains a `data` key
-        // { data: { post: { title... }}}
         // setting the state will force a re-render
         this.setState({ result: response.data.hits, searched: true })
         console.log(response.data.hits)
@@ -72,9 +55,9 @@ class Search extends Component {
       .catch(console.error)
   }
 
-  handleSubmitHomePage = () => {
+  handleSubmitAuthor = () => {
     axios({
-      url: 'http://hn.algolia.com/api/v1/search?query=foo&tags=story',
+      url: `http://hn.algolia.com/api/v1/search?tags=story,author_${this.state.searchBarInput}`,
       method: 'GET'
     })
       .then(response => {
@@ -101,11 +84,13 @@ class Search extends Component {
                   <a href={result.url}>{result.url ? result.title : ''}</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>
+                  {this.state.button === 'comment' ? <div dangerouslySetInnerHTML={{ _html: result._highlightResult.comment_text.value }}></div> : '' }
                 </Card.Title>
                 <p className='d-inline'>By {result.author}</p>
                 <p className='text-right font-italic' >{moment(result.created_at).format('MMMM Do, YYYY')} </p>
               </Card.Body>
             </Card>
+            {this.state.button === 'comment' ? <div>{result._highlightResult.comment_text.value}</div> : '' }
           </div>)}
         </div>
       )
@@ -126,6 +111,8 @@ class Search extends Component {
                 value={this.state.searchBarInput}
                 onChange={this.handleChange}
               />
+
+              {/* Show corresponding button to correct axios request for either author, title, or comment given this.state.button */}
               {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmit}>Get search</button>}
               {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
               {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
