@@ -75,7 +75,7 @@ class Search extends Component {
     console.log('seeing if this renders twice')
     let resultJSX = []
 
-    if (this.state.searched) {
+    if (this.state.searched && this.state.button !== 'comment') {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
@@ -85,18 +85,23 @@ class Search extends Component {
                   <a href={result.url}>{result.url ? result.title : ''}</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>
-                  {this.state.button === 'comment' ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
                 </Card.Title>
                 <p className='d-inline'>By {result.author}</p>
                 <p className='text-right font-italic' >{moment(result.created_at).format('MMMM Do, YYYY')} </p>
               </Card.Body>
             </Card>
-            {this.state.button === 'comment' ? <div>{result._highlightResult.comment_text.value}</div> : '' }
           </div>)}
         </div>
       )
-    } else {
-      resultJSX = ''
+    } else if (this.state.searched && this.state.button === 'comment') {
+      resultJSX = (
+        <div>
+          {this.state.result.map(result => <div key={result.created_at}>
+
+            {this.state.button === 'comment' ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
+          </div>
+          )} </div>
+      )
     }
 
     return (
