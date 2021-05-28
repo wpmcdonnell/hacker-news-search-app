@@ -13,7 +13,8 @@ class Search extends Component {
       result: [],
       search: false,
       searchBarInput: '',
-      button: 'story'
+      button: 'story',
+      dateButton: 'all'
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -116,7 +117,7 @@ class Search extends Component {
       <Fragment>
         <div>
           <div className='mx-auto'>
-            <h1 className='mb-3'>Please enter your search</h1>
+            <h1 className='main-title mb-3'>HACKER NEWS SEARCH</h1>
             <form className='form-inline mb-4'>
               <input
                 className='form-control col-8'
@@ -128,48 +129,54 @@ class Search extends Component {
               {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmit}>Get search</button>}
               {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
               {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
-              {this.state.button === 'wax' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
             </form>
 
-            <Dropdown className='mt-2'>
-              {this.state.button === 'comment' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                Comment
-              </Dropdown.Toggle> : '' }
+            <div className='d-inline mt-2'>
+              <p className='search-instruction-text d-inline mr-3'>Search by</p>
 
-              {this.state.button === 'story' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                Title
-              </Dropdown.Toggle> : '' }
+              <Dropdown className=' d-inline'>
+                {this.state.button === 'comment' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                  Comment
+                </Dropdown.Toggle> : '' }
 
-              {this.state.button === 'author' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                dude
-              </Dropdown.Toggle> : '' }
+                {this.state.button === 'story' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                  Title
+                </Dropdown.Toggle> : '' }
 
-              {this.state.button === 'wax' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                wax
-              </Dropdown.Toggle> : '' }
+                {this.state.button === 'author' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                  dude
+                </Dropdown.Toggle> : '' }
 
-              <Dropdown.Menu show>
-                <Dropdown.Header>Search by</Dropdown.Header>
-                <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">title</Dropdown.Item>
-                <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">comment</Dropdown.Item>
-                <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">dude</Dropdown.Item>
-                <Dropdown.Item onClick={() => this.setState({ button: 'wax' })} href="#/search">idk</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">Titles</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">Comments</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">Authors</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              <p className='search-instruction-text d-inline ml-3 mr-3'>from</p>
+
+              <Dropdown className=' d-inline'>
+                {this.state.dateButton === 'all' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Forever
+                </Dropdown.Toggle> : '' }
+
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'all' })} href="#/search">All</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'day' })} href="#/search">Last 24 hours</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'year' })} href="#/search">Last year</Dropdown.Item>
+                </Dropdown.Menu>
+
+              </Dropdown>
+
+            </div>
 
             <div className="mt-3 mb-2">
-              <div className="mb-2">
-                <div className="list-group" id="list-tab" role="tablist">
-                  <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach Story Title</a>
-                  <a className={this.state.button === 'comment' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comment' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
-                  <a className={this.state.button === 'author' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'author' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Authors</a>
-                </div>
-              </div>
               <div className="">
                 <div className="tab-content" id="nav-tabContent">
-                  <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
-                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
-                  <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the data base for authors!</div>
+                  <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Go ahead and search the data base for article story content containing your search word!</div>
+                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search the all data base article comments containing your search word!</div>
+                  <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search the data base for authors!</div>
                 </div>
               </div>
             </div>

@@ -1,6 +1,21 @@
 @import '~bootstrap/scss/bootstrap';
 
+
+.main-title {
+  font-size: 30px;
+  margin-top: 1em;
+  font-weight: bold;
+}
 .url {
   color: grey;
   font-size: 10px;
+}
+
+.search-instruction-text {
+  color: grey;
+  font-size: 14px;
+}
+
+.tab-content {
+  font-style: italic;
 }
