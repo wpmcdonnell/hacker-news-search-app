@@ -10,28 +10,20 @@ class Search extends Component {
       picture: '',
       result: [],
       search: false,
-      searchBar: {
-        searchText: ''
-      }
+      searchBarInput: '',
+      button: 'story'
     }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange = (event) => {
     event.persist()
-    this.setState(oldState => {
-      const value = event.target.value
-      const name = event.target.name
-
-      const updatedField = { [name]: value }
-
-      // spread operator ends up merging these two objects
-      return { searchBar: { ...oldState.searchBar, ...updatedField } }
-    })
+    this.setState({ searchBarInput: event.target.value })
   }
 
   handleSubmit = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBar.searchText}&tags=story`,
+      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story`,
       method: 'GET'
     })
       .then(response => {
@@ -40,7 +32,7 @@ class Search extends Component {
         // setting the state will force a re-render
         this.setState({ result: response.data.hits, searched: true })
         console.log(response.data.hits)
-        console.log(this.state.searchBar.searchText)
+        console.log(this.state.searchBarInput)
       })
       .catch(console.error)
   }
@@ -60,9 +52,9 @@ class Search extends Component {
       .catch(console.error)
   }
 
-  handleSubmitComments= () => {
+  handleSubmitComment= () => {
     axios({
-      url: 'http://hn.algolia.com/api/v1/search?query=foo&tags=story',
+      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=comment`,
       method: 'GET'
     })
       .then(response => {
@@ -71,6 +63,7 @@ class Search extends Component {
         // setting the state will force a re-render
         this.setState({ result: response.data.hits, searched: true })
         console.log(response.data.hits)
+        console.log(this.state.button)
       })
       .catch(console.error)
   }
@@ -96,7 +89,7 @@ class Search extends Component {
     if (this.state.searched) {
       resultJSX = (
         <div>
-          {this.state.result.map(result => <div key={result.url}>{result.url}</div>)}
+          {this.state.result.map(result => <p key={result.url}>{result.url}</p>)}
         </div>
       )
     }
@@ -110,12 +103,30 @@ class Search extends Component {
               <input
                 className='form-control mb-2'
                 type="text"
-                name="searchText"
                 placeholder="Enter your search"
-                value={this.state.searchText}
+                value={this.state.searchBarInput}
                 onChange={this.handleChange}
               />
-              <button onClick={this.handleSubmit}>Get search</button>
+              <div className="row">
+                <div className="col-4">
+                  <div className="list-group" id="list-tab" role="tablist">
+                    <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach story</a>
+                    <a className={this.state.button === 'comments' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comments' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
+                    <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
+                    <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                  </div>
+                </div>
+                <div className="col-8">
+                  <div className="tab-content" id="nav-tabContent">
+                    <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
+                    <div className={this.state.button === 'comments' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
+                    <div className="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                    <div className="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+                  </div>
+                </div>
+              </div>
+              {this.state.button === 'story' && <button onClick={this.handleSubmit}>Get search</button>}
+              {this.state.button === 'comments' && <button onClick={this.handleSubmitComment}>Get search</button>}
             </form>
             <div>{resultJSX}</div>
           </div>
