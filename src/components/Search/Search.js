@@ -64,6 +64,7 @@ class Search extends Component {
         this.setState({ result: response.data.hits, searched: true })
         console.log(response.data.hits)
         console.log(this.state.button)
+        console.log(this.state.searchBarInput)
       })
       .catch(console.error)
   }
@@ -89,7 +90,10 @@ class Search extends Component {
     if (this.state.searched) {
       resultJSX = (
         <div>
-          {this.state.result.map(result => <p key={result.url}>{result.url}</p>)}
+          {this.state.result.map(result => <div key={result.created_at}>
+
+            <a href={result.url}>{result.url ? result.title : ''}</a>
+          </div>)}
         </div>
       )
     }
@@ -111,7 +115,7 @@ class Search extends Component {
                 <div className="col-4">
                   <div className="list-group" id="list-tab" role="tablist">
                     <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach story</a>
-                    <a className={this.state.button === 'comments' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comments' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
+                    <a className={this.state.button === 'comment' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comment' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
                     <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
                     <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
                   </div>
@@ -119,14 +123,15 @@ class Search extends Component {
                 <div className="col-8">
                   <div className="tab-content" id="nav-tabContent">
                     <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
-                    <div className={this.state.button === 'comments' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
+                    <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
                     <div className="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
                     <div className="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
                   </div>
                 </div>
               </div>
               {this.state.button === 'story' && <button onClick={this.handleSubmit}>Get search</button>}
-              {this.state.button === 'comments' && <button onClick={this.handleSubmitComment}>Get search</button>}
+              {this.state.button === 'comment' && <button onClick={this.handleSubmitComment}>Get search</button>}
+              {this.state.button === 'author' && <button onClick={this.handleSubmitAuthor}>Get search</button>}
             </form>
             <div>{resultJSX}</div>
           </div>
