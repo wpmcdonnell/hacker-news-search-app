@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Card } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
 import moment from 'moment'
+import parse from 'html-react-parser'
 
 class Search extends Component {
   constructor () {
@@ -84,7 +85,7 @@ class Search extends Component {
                   <a href={result.url}>{result.url ? result.title : ''}</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>
-                  {this.state.button === 'comment' ? <div dangerouslySetInnerHTML={{ _html: result._highlightResult.comment_text.value }}></div> : '' }
+                  {this.state.button === 'comment' ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
                 </Card.Title>
                 <p className='d-inline'>By {result.author}</p>
                 <p className='text-right font-italic' >{moment(result.created_at).format('MMMM Do, YYYY')} </p>
