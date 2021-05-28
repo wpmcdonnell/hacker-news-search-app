@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { Card } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 import moment from 'moment'
 
 class Search extends Component {
@@ -97,7 +98,8 @@ class Search extends Component {
               <Card.Body className=''>
                 <Card.Title>
                   <a href={result.url}>{result.url ? result.title : ''}</a>
-                  <p className='url'>{result.url}</p>
+                  <br/>
+                  <a className='url' href={result.url}>{result.url}</a>
                 </Card.Title>
                 <p className='d-inline'>By {result.author}</p>
                 <p className='text-right font-italic' >{moment(result.created_at).format('MMMM Do, YYYY')} </p>
@@ -126,21 +128,51 @@ class Search extends Component {
               {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmit}>Get search</button>}
               {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
               {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
-              <div className="mt-3 mb-2">
-                <div className="mb-2">
-                  <div className="list-group" id="list-tab" role="tablist">
-                    <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach Story Title</a>
-                    <a className={this.state.button === 'comment' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comment' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="tab-content" id="nav-tabContent">
-                    <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
-                    <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
-                  </div>
+              {this.state.button === 'wax' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
+            </form>
+
+            <Dropdown className='mt-2'>
+              {this.state.button === 'comment' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Comment
+              </Dropdown.Toggle> : '' }
+
+              {this.state.button === 'story' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Title
+              </Dropdown.Toggle> : '' }
+
+              {this.state.button === 'author' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                dude
+              </Dropdown.Toggle> : '' }
+
+              {this.state.button === 'wax' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                wax
+              </Dropdown.Toggle> : '' }
+
+              <Dropdown.Menu show>
+                <Dropdown.Header>Search by</Dropdown.Header>
+                <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">title</Dropdown.Item>
+                <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">comment</Dropdown.Item>
+                <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">dude</Dropdown.Item>
+                <Dropdown.Item onClick={() => this.setState({ button: 'wax' })} href="#/search">idk</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+
+            <div className="mt-3 mb-2">
+              <div className="mb-2">
+                <div className="list-group" id="list-tab" role="tablist">
+                  <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach Story Title</a>
+                  <a className={this.state.button === 'comment' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comment' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
+                  <a className={this.state.button === 'author' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'author' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Authors</a>
                 </div>
               </div>
-            </form>
+              <div className="">
+                <div className="tab-content" id="nav-tabContent">
+                  <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
+                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
+                  <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the data base for authors!</div>
+                </div>
+              </div>
+            </div>
             <div>{resultJSX}</div>
           </div>
         </div>
