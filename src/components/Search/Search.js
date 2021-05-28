@@ -9,7 +9,6 @@ class Search extends Component {
     super()
 
     this.state = {
-      picture: '',
       result: [],
       search: false,
       searchBarInput: '',
@@ -87,6 +86,7 @@ class Search extends Component {
   }
 
   render () {
+    console.log('seeing if this renders twice')
     let resultJSX = []
 
     if (this.state.searched) {
@@ -105,6 +105,8 @@ class Search extends Component {
           </div>)}
         </div>
       )
+    } else {
+      resultJSX = ''
     }
 
     return (
@@ -137,7 +139,7 @@ class Search extends Component {
                   </div>
                 </div>
               </div>
-              {this.state.button === 'story' && <button onClick={this.handleSubmit}>Get search</button>}
+              {this.state.button === 'story' && <button type='submit'>Get search</button>}
               {this.state.button === 'comment' && <button onClick={this.handleSubmitComment}>Get search</button>}
               {this.state.button === 'author' && <button onClick={this.handleSubmitAuthor}>Get search</button>}
             </form>
