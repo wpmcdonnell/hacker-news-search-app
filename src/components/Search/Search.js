@@ -144,13 +144,13 @@ class Search extends Component {
                 </Dropdown.Toggle> : '' }
 
                 {this.state.button === 'author' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  dude
+                  Author
                 </Dropdown.Toggle> : '' }
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">Titles</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">Comments</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">Authors</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">Title</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">Comment</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">Author</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
 
@@ -159,6 +159,12 @@ class Search extends Component {
               <Dropdown className=' d-inline'>
                 {this.state.dateButton === 'all' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
                 Forever
+                </Dropdown.Toggle> : '' }
+                {this.state.dateButton === 'day' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                24 hr
+                </Dropdown.Toggle> : '' }
+                {this.state.dateButton === 'year' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                past year
                 </Dropdown.Toggle> : '' }
 
                 <Dropdown.Menu>
@@ -174,9 +180,9 @@ class Search extends Component {
             <div className="mt-3 mb-2">
               <div className="">
                 <div className="tab-content" id="nav-tabContent">
-                  <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Go ahead and search the data base for article story content containing your search word!</div>
-                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search the all data base article comments containing your search word!</div>
-                  <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search the data base for authors!</div>
+                  <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with headlines containing your search word!</div>
+                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with comments containing search word!</div>
+                  <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles by author!</div>
                 </div>
               </div>
             </div>
