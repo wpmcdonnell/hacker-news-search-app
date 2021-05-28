@@ -114,23 +114,27 @@ class Search extends Component {
         <div>
           <div className='mx-auto'>
             <h1 className='mb-3'>Please enter your search</h1>
-            <form onSubmit={this.handleSubmit}>
+            <form className='form-inline mb-4'>
               <input
-                className='form-control mb-2'
+                className='form-control col-10'
                 type="text"
                 placeholder="Enter your search"
+                value={this.state.searchBarInput}
                 onChange={this.handleChange}
               />
-              <div className="row">
+              {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmit}>Get search</button>}
+              {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
+              {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
+              <div className="row mt-3 mb-2">
                 <div className="col-4">
                   <div className="list-group" id="list-tab" role="tablist">
-                    <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach story</a>
+                    <a className={this.state.button === 'story' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'story' })} id="list-home-list" data-toggle="list" href="#/search" role="tab" aria-controls="home">Seach Story Title</a>
                     <a className={this.state.button === 'comment' ? 'list-group-item list-group-item-action active' : 'list-group-item list-group-item-action'} onClick={() => this.setState({ button: 'comment' })} id="list-profile-list" data-toggle="list" href="#/search" role="tab" aria-controls="profile">Search Comments</a>
-                    <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Messages</a>
-                    <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+                    <a className="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#/search" role="tab" aria-controls="messages">Messages</a>
+                    <a className="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#/search" role="tab" aria-controls="settings">Settings</a>
                   </div>
                 </div>
-                <div className="col-8">
+                <div className="col-6">
                   <div className="tab-content" id="nav-tabContent">
                     <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-home" role="tabpanel" aria-labelledby="list-home-list">Go ahead and search the data base for article story content containing your search word!</div>
                     <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">Search the all data base article comments containing your search word!</div>
@@ -139,9 +143,6 @@ class Search extends Component {
                   </div>
                 </div>
               </div>
-              {this.state.button === 'story' && <button type='submit'>Get search</button>}
-              {this.state.button === 'comment' && <button onClick={this.handleSubmitComment}>Get search</button>}
-              {this.state.button === 'author' && <button onClick={this.handleSubmitAuthor}>Get search</button>}
             </form>
             <div>{resultJSX}</div>
           </div>
