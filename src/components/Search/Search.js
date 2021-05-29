@@ -79,10 +79,12 @@ class Search extends Component {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
+
             <Card className='mt-2 mb-3 shadow bg-white rounded'>
               <Card.Body className=''>
                 <Card.Title>
-                  <a href={result.url}>{result.url ? result.title : ''}</a>
+                  {result.url === '' ? <p>{result.title}</p> : '' }
+                  <a href={result.url}>{result.url !== '' ? result.title : '' }</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>
                 </Card.Title>
