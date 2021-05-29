@@ -16,7 +16,8 @@ class Search extends Component {
       searchBarInput: '',
       button: 'story',
       dateButton: 'all',
-      commentJSX: false
+      commentJSX: false,
+      timeParams: 0
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -28,7 +29,7 @@ class Search extends Component {
 
   handleSubmit = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=10000`,
+      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=10000&numericFilters=created_at_i>${this.state.timeParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -43,7 +44,7 @@ class Search extends Component {
 
   handleSubmitComment= () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=comment`,
+      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=comment&numericFilters=created_at_i>${this.state.timeParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -59,7 +60,7 @@ class Search extends Component {
 
   handleSubmitAuthor = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?tags=story,author_${this.state.searchBarInput}`,
+      url: `http://hn.algolia.com/api/v1/search?tags=story,author_${this.state.searchBarInput}&numericFilters=created_at_i>${this.state.timeParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -172,9 +173,9 @@ class Search extends Component {
                 </Dropdown.Toggle> : '' }
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'all' })} href="#/search">All</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'day' })} href="#/search">Last 24 hours</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'year' })} href="#/search">Last year</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'all', timeParams: 0 })} href="#/search">All</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'day', timeParams: Math.floor(Date.now() / 1000) - 86400 })} href="#/search">Last 24 hours</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ dateButton: 'year', timeParams: Math.floor(Date.now() / 1000) - 31556926 })} href="#/search">Last year</Dropdown.Item>
                 </Dropdown.Menu>
 
               </Dropdown>
