@@ -15,7 +15,8 @@ class Search extends Component {
       search: false,
       searchBarInput: '',
       button: 'story',
-      dateButton: 'all'
+      dateButton: 'all',
+      commentJSX: false
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -33,7 +34,7 @@ class Search extends Component {
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true })
+        this.setState({ result: response.data.hits, searched: true, commentJSX: false })
         console.log(response.data.hits)
         console.log(this.state.searchBarInput)
       })
@@ -48,7 +49,7 @@ class Search extends Component {
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true })
+        this.setState({ result: response.data.hits, searched: true, commentJSX: true })
         console.log(response.data.hits)
         console.log(this.state.button)
         console.log(this.state.searchBarInput)
@@ -65,7 +66,7 @@ class Search extends Component {
         // axios response object contains a `data` key
         // { data: { post: { title... }}}
         // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true })
+        this.setState({ result: response.data.hits, searched: true, commentJSX: false })
         console.log(response.data.hits)
       })
       .catch(console.error)
@@ -75,7 +76,7 @@ class Search extends Component {
     console.log('seeing if this renders twice')
     let resultJSX = []
 
-    if (this.state.searched && this.state.button !== 'comment') {
+    if (this.state.searched && !this.state.commentJSX) {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
@@ -83,7 +84,7 @@ class Search extends Component {
             <Card className='mt-2 mb-3 shadow bg-white rounded'>
               <Card.Body className=''>
                 <Card.Title>
-                  {result.url === '' ? <p>{result.title}</p> : '' }
+                  {result.url === '' ? <p>{result.title} (source unavailble)</p> : '' }
                   <a href={result.url}>{result.url !== '' ? result.title : '' }</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>
@@ -95,7 +96,7 @@ class Search extends Component {
           </div>)}
         </div>
       )
-    } else if (this.state.searched && this.state.button === 'comment') {
+    } else if (this.state.searched && this.state.commentJSX) {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
@@ -152,7 +153,7 @@ class Search extends Component {
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">Title</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({ result: [], button: 'comment' })} href="#/search">Comment</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">Comment</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">Author</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
