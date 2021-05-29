@@ -97,6 +97,14 @@ class Search extends Component {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
+            <div className='row ml-1 mr-1 comment-header-text'>
+
+              <p className=''>{result.points} points | </p>
+              <p className='ml-1'>{result.author} | </p>
+              <p className='ml-1'>{moment(result.created_at, 'YYYYMMDD').fromNow()} | on </p>
+              <a className='ml-1 comment-header-text comment-story-link' href= {result.story_url}>{result.story_title} </a>
+
+            </div>
 
             {this.state.button === 'comment' ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
           </div>
@@ -142,7 +150,7 @@ class Search extends Component {
 
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">Title</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">Comment</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ result: [], button: 'comment' })} href="#/search">Comment</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">Author</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -174,7 +182,7 @@ class Search extends Component {
               <div className="">
                 <div className="tab-content" id="nav-tabContent">
                   <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with headlines containing your search word!</div>
-                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with comments containing search word!</div>
+                  <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with comments containing your search word!</div>
                   <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles by author!</div>
                 </div>
               </div>
