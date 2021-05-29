@@ -29,3 +29,13 @@
 .tab-content {
   font-style: italic;
 }
+
+.pagination {
+  @extend .d-flex, .flex-wrap, .justify-content-center
+}
+
+.pagination-title {
+  color: grey;
+  font-size: 10px;
+  font-style: italic;
+}
