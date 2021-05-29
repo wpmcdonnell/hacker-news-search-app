@@ -71,7 +71,7 @@ class Search extends Component {
         // axios response object contains a `data` key
         // { data: { post: { title... }}}
         // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true, commentJSX: false })
+        this.setState({ result: response.data, searched: true, commentJSX: false })
         console.log(response.data.hits)
       })
       .then(window.scrollTo(0, 0))
@@ -212,6 +212,12 @@ class Search extends Component {
                       <span className="sr-only">Previous</span>
                     </a>
                   </li>
+
+                  {this.state.searched ? Array.from(Array(this.state.result.nbPages + 1).keys()).map(result => <li className="page-item" key={result}><a onClick={async () => {
+                    await this.setState({ pageParams: 0 }); this.handleSubmit()
+                  } }
+                  className="page-link" href="#/search">{result}</a></li>) : '' }
+
                   <li className="page-item"><a onClick={async () => {
                     await this.setState({ pageParams: 0 }); this.handleSubmit()
                   } }
