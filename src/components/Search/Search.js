@@ -17,7 +17,8 @@ class Search extends Component {
       button: 'story',
       dateButton: 'all',
       commentJSX: false,
-      timeParams: 0
+      timeParams: 0,
+      pageParams: 0
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -29,7 +30,7 @@ class Search extends Component {
 
   handleSubmit = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=10000&numericFilters=created_at_i>${this.state.timeParams}`,
+      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=30&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -37,8 +38,10 @@ class Search extends Component {
         // setting the state will force a re-render
         this.setState({ result: response.data.hits, searched: true, commentJSX: false })
         console.log(response.data.hits)
+        console.log(this.state.pageParams)
         console.log(this.state.searchBarInput)
       })
+      .then(window.scrollTo(0, 0))
       .catch(console.error)
   }
 
@@ -55,6 +58,7 @@ class Search extends Component {
         console.log(this.state.button)
         console.log(this.state.searchBarInput)
       })
+      .then(window.scrollTo(0, 0))
       .catch(console.error)
   }
 
@@ -70,11 +74,12 @@ class Search extends Component {
         this.setState({ result: response.data.hits, searched: true, commentJSX: false })
         console.log(response.data.hits)
       })
+      .then(window.scrollTo(0, 0))
       .catch(console.error)
   }
 
   render () {
-    console.log('seeing if this renders twice')
+    console.log('seeing if this renders twice -- pageparams', this.state.pageParams)
     let resultJSX = []
 
     if (this.state.searched && !this.state.commentJSX && this.state.result.toString() !== [].toString()) {
@@ -195,7 +200,37 @@ class Search extends Component {
                 </div>
               </div>
             </div>
-            <div>{resultJSX}</div>
+            <div className='mb-5'>{resultJSX}</div>
+            <div className='d-flex justify-content-center mb-5'>
+              <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                  <li className="page-item">
+                    <a className="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span className="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li className="page-item"><a onClick={async () => {
+                    await this.setState({ pageParams: 0 }); this.handleSubmit()
+                  } }
+                  className="page-link" href="#/search">1</a></li>
+                  <li className="page-item"><a onClick={async () => {
+                    await this.setState({ pageParams: 1 }); this.handleSubmit()
+                  } }
+                  className="page-link" href="#/search">2</a></li>
+                  <li className="page-item"><a onClick={async () => {
+                    await this.setState({ pageParams: 0 }); this.handleSubmit()
+                  } }
+                  className="page-link" href="#/search">3</a></li>
+                  <li className="page-item">
+                    <a className="page-link" href="#/search" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span className="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </Fragment>
