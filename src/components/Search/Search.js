@@ -77,7 +77,7 @@ class Search extends Component {
     console.log('seeing if this renders twice')
     let resultJSX = []
 
-    if (this.state.searched && !this.state.commentJSX) {
+    if (this.state.searched && !this.state.commentJSX && this.state.result.toString() !== [].toString()) {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
@@ -97,7 +97,7 @@ class Search extends Component {
           </div>)}
         </div>
       )
-    } else if (this.state.searched && this.state.commentJSX) {
+    } else if (this.state.searched && this.state.commentJSX && this.state.result.toString() !== [].toString()) {
       resultJSX = (
         <div>
           {this.state.result.map(result => <div key={result.created_at}>
@@ -113,6 +113,10 @@ class Search extends Component {
             {this.state.commentJSX ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
           </div>
           )} </div>
+      )
+    } else if (this.state.searched && this.state.result.toString() === [].toString()) {
+      resultJSX = (
+        <p> No results! Try again! </p>
       )
     }
 
