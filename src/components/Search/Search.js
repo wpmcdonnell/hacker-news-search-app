@@ -36,10 +36,10 @@ class Search extends Component {
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true, commentJSX: false })
+        this.setState({ result: response.data, searched: true, commentJSX: false })
         console.log(response.data.hits)
         console.log(this.state.pageParams)
-        console.log(this.state.searchBarInput)
+        console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
       .catch(console.error)
@@ -53,10 +53,10 @@ class Search extends Component {
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
-        this.setState({ result: response.data.hits, searched: true, commentJSX: true })
+        this.setState({ result: response.data, searched: true, commentJSX: true })
         console.log(response.data.hits)
         console.log(this.state.button)
-        console.log(this.state.searchBarInput)
+        console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
       .catch(console.error)
@@ -85,7 +85,7 @@ class Search extends Component {
     if (this.state.searched && !this.state.commentJSX && this.state.result.toString() !== [].toString()) {
       resultJSX = (
         <div>
-          {this.state.result.map(result => <div key={result.created_at}>
+          {this.state.result.hits.map(result => <div key={result.created_at}>
 
             <Card className='mt-2 mb-3 shadow bg-white rounded'>
               <Card.Body className=''>
@@ -105,7 +105,7 @@ class Search extends Component {
     } else if (this.state.searched && this.state.commentJSX && this.state.result.toString() !== [].toString()) {
       resultJSX = (
         <div>
-          {this.state.result.map(result => <div key={result.created_at}>
+          {this.state.result.hits.map(result => <div key={result.created_at}>
             <div className='row ml-1 mr-1 comment-header-text'>
 
               <p className=''>{result.points} points | </p>
@@ -201,11 +201,13 @@ class Search extends Component {
               </div>
             </div>
             <div className='mb-5'>{resultJSX}</div>
+
             <div className='d-flex justify-content-center mb-5'>
               <nav aria-label="Page navigation example">
                 <ul className="pagination">
+
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="#/search" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                       <span className="sr-only">Previous</span>
                     </a>
@@ -219,7 +221,7 @@ class Search extends Component {
                   } }
                   className="page-link" href="#/search">2</a></li>
                   <li className="page-item"><a onClick={async () => {
-                    await this.setState({ pageParams: 0 }); this.handleSubmit()
+                    await this.setState({ pageParams: 2 }); this.handleSubmit()
                   } }
                   className="page-link" href="#/search">3</a></li>
                   <li className="page-item">
