@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 
 import Header from './components/Header/Header'
 import Search from './components/Search/Search'
+import History from './components/History/History'
 
 class App extends Component {
   constructor (props) {
@@ -20,6 +21,9 @@ class App extends Component {
         <main className="container">
           <Route path='/search' render={() => (
             <Search msgAlert={this.msgAlert} setUser={this.setUser} />
+          )} />
+          <Route path='/history' render={() => (
+            <History msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
         </main>
       </Fragment>
