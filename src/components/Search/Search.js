@@ -104,12 +104,12 @@ class Search extends Component {
 
               <p className=''>{result.points} points | </p>
               <p className='ml-1'>{result.author} | </p>
-              <p className='ml-1'>{moment(result.created_at, 'YYYYMMDD').fromNow()} | on </p>
-              <a className='ml-1 comment-header-text comment-story-link' href= {result.story_url}>{result.story_title} </a>
+              <p className='ml-1'>{moment(result.created_at, 'YYYYMMDD').fromNow()} | via: </p>
+              <a className='ml-1 mb-2 comment-header-text comment-story-link' href={result.story_url}>{result.story_title} </a>
 
             </div>
 
-            {this.state.button === 'comment' ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
+            {this.state.commentJSX ? <div>{parse(result._highlightResult.comment_text.value)}</div> : '' }
           </div>
           )} </div>
       )
@@ -181,7 +181,7 @@ class Search extends Component {
 
             </div>
 
-            <div className="mt-3 mb-2">
+            <div className="mt-4 mb-4">
               <div className="">
                 <div className="tab-content" id="nav-tabContent">
                   <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with headlines containing your search word!</div>
