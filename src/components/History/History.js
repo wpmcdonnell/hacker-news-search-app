@@ -22,15 +22,12 @@ class History extends Component {
   }
 
   render () {
-    console.log(this.state.pastSearches)
-    console.log(sessionStorage)
-    console.log('this is ur object.values', Object.values(sessionStorage))
     return (
       <Fragment>
         <div>
           <h2> User past searches</h2>
           <div>{this.state.pastSearches.map((item, index) => <p key={index}>{item}</p>)} </div>
-          <button onClick={this.clearSearches}> Clear Searches</button>
+          {this.state.pastSearches.toString() !== [].toString() ? <button className='btn-primary' onClick={this.clearSearches}> Clear Searches</button> : 'You have no search history!' }
         </div>
       </Fragment>
     )

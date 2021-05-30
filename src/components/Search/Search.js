@@ -5,9 +5,6 @@ import { Card } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
 import moment from 'moment'
 import parse from 'html-react-parser'
-// import { createBrowserHistory } from 'history'
-//
-// const history = createBrowserHistory()
 
 class Search extends Component {
   constructor () {
@@ -44,12 +41,9 @@ class Search extends Component {
         // axios response object contains a `data` key
         // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
-        console.log(response.data.hits)
-        console.log(this.state.pageParams)
-        console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
-      .then(sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched ${this.state.searchBarInput} in ${this.state.button} from ${this.state.dateButton} time `))
+      .then(sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `))
       .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
   }
@@ -63,11 +57,9 @@ class Search extends Component {
         // axios response object contains a `data` key
         // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: true, pageParams: 0 })
-        console.log(response.data.hits)
-        console.log(this.state.button)
-        console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
+      .then(sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `))
       .catch(console.error)
   }
 
@@ -81,14 +73,14 @@ class Search extends Component {
         // { data: { post: { title... }}}
         // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
-        console.log(response.data.hits)
       })
+      .then(sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `))
       .then(window.scrollTo(0, 0))
+
       .catch(console.error)
   }
 
   render () {
-    console.log(this.props)
     let resultJSX = []
 
     if (this.state.searched && !this.state.commentJSX && this.state.result.toString() !== [].toString()) {
