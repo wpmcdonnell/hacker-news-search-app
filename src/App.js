@@ -33,7 +33,7 @@ class App extends Component {
             <Search searchStorageCounterFunction={this.searchStorageCounterFunction} searchStorageCounterParentState={this.state.searchStorageCounter} />
           )} />
           <Route path='/history' render={() => (
-            <History msgAlert={this.msgAlert} />
+            <History />
           )} />
         </main>
       </Fragment>
