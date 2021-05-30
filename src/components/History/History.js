@@ -19,9 +19,6 @@ class History extends Component {
       searches.push(localStorage.getItem(keys[i]))
     }
     this.setState({ pastSearches: searches })
-    // for (let i = 0; i < localStorage.length; i++) {
-    //   this.setSate({ pastSearches: localStorage.getItem(localStorage.key(i)) })
-    // }
   }
 
   render () {
@@ -29,7 +26,7 @@ class History extends Component {
     return (
       <Fragment>
         <div>
-        <h2> User past searches</h2>
+          <h2> User past searches</h2>
           <div>{this.state.pastSearches.map(item => <p key={item}>{item}</p>)}</div>
         </div>
       </Fragment>
