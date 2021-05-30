@@ -18,7 +18,8 @@ class Search extends Component {
       dateButton: 'all',
       commentJSX: false,
       timeParams: 0,
-      pageParams: 0
+      pageParams: 0,
+      newPageRequest: false
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -43,7 +44,7 @@ class Search extends Component {
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
       .then(window.scrollTo(0, 0))
-      .then(sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `))
+      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `) } })
       .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
   }
@@ -141,7 +142,9 @@ class Search extends Component {
               />
 
               {/* Show corresponding button to correct axios request for either author, title, or comment given this.state.button */}
-              {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmit}>Get search</button>}
+              {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={() => {
+                this.setState({ newPageRequest: false }); this.handleSubmit()
+              }}>Get search</button>}
               {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
               {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
             </form>
@@ -209,7 +212,7 @@ class Search extends Component {
                 <ul className="pagination">
 
                   {this.state.searched && this.state.result.nbPages > 1 ? Array.from(Array(this.state.result.nbPages).keys()).map(result => <li className="page-item flex-wrap ml-1 mr-1 mb-1" key={result}><a onClick={async () => {
-                    await this.setState({ pageParams: result }); if (this.state.button === 'story') { this.handleSubmit() } else if (this.state.button === 'comment') { this.handleSubmitComment() } else if (this.state.button === 'author') { this.handleSubmitAuthor() }
+                    await this.setState({ pageParams: result, newPageRequest: true }); if (this.state.button === 'story') { this.handleSubmit() } else if (this.state.button === 'comment') { this.handleSubmitComment() } else if (this.state.button === 'author') { this.handleSubmitAuthor() }
                   } }
                   className="page-link" href="#/search">{result + 1}</a></li>) : '' }
 
