@@ -28,6 +28,7 @@ class Search extends Component {
   }
 
   componentDidMount () {
+    this.setState({ searchStorageCounter: this.props.searchStorageCounterParentState })
   }
 
   handleChange = (event) => {
@@ -43,12 +44,13 @@ class Search extends Component {
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
-        this.setState(prevState => ({ result: response.data, searched: true, commentJSX: false, pageParams: 0, searchStorageCounter: prevState + 1 }))
+        this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
         console.log(response.data.hits)
         console.log(this.state.pageParams)
         console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
+      .then(this.props.searchStorageCounterFunction())
       .then(localStorage.setItem(`Search + ${this.state.searchStorageCounter}`, `Searched ${this.state.searchBarInput} in ${this.state.button} from ${this.state.dateButton} time `))
       .catch(console.error)
   }

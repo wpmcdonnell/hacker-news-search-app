@@ -8,10 +8,14 @@ import History from './components/History/History'
 class App extends Component {
   constructor (props) {
     super(props)
+    this.searchStorageCounterFunction = this.searchStorageCounterFunction.bind(this)
     this.state = {
-      user: null,
-      msgAlerts: []
+      searchStorageCounter: 1
     }
+  }
+
+  searchStorageCounterFunction () {
+    this.setState({ searchStorageCounter: this.state.searchStorageCounter + 1 })
   }
 
   render () {
@@ -20,10 +24,10 @@ class App extends Component {
         <Header/>
         <main className="container">
           <Route path='/search' render={() => (
-            <Search msgAlert={this.msgAlert} setUser={this.setUser} />
+            <Search searchStorageCounterFunction={this.searchStorageCounterFunction} searchStorageCounterParentState={this.state.searchStorageCounter} />
           )} />
           <Route path='/history' render={() => (
-            <History msgAlert={this.msgAlert} setUser={this.setUser} />
+            <History msgAlert={this.msgAlert} />
           )} />
         </main>
       </Fragment>

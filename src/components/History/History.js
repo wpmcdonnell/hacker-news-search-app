@@ -23,6 +23,7 @@ class History extends Component {
 
   render () {
     console.log(this.state.pastSearches)
+    console.log(this.props.location.data)
     return (
       <Fragment>
         <div>
