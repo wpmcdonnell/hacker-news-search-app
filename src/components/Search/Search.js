@@ -5,6 +5,9 @@ import { Card } from 'react-bootstrap'
 import Dropdown from 'react-bootstrap/Dropdown'
 import moment from 'moment'
 import parse from 'html-react-parser'
+// import { createBrowserHistory } from 'history'
+//
+// const history = createBrowserHistory()
 
 class Search extends Component {
   constructor () {
@@ -18,7 +21,8 @@ class Search extends Component {
       dateButton: 'all',
       commentJSX: false,
       timeParams: 0,
-      pageParams: 0
+      pageParams: 0,
+      searchStorageCounter: 0
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -39,14 +43,14 @@ class Search extends Component {
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
-        this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
+        this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0, searchStorageCounter: this.state.searchStorageCounter + 1 })
         console.log(response.data.hits)
         console.log(this.state.pageParams)
         console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
+      .then(localStorage.setItem(`Search + ${this.state.searchStorageCounter}`, `Search ${this.state.searchStorageCounter}`))
       .catch(console.error)
-      .then(setTimeout(this.props.history.push('/history')), 3000)
   }
 
   handleSubmitComment= () => {
@@ -63,6 +67,7 @@ class Search extends Component {
         console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
+      .then(localStorage.setItem('dude', 'mark'))
       .catch(console.error)
   }
 

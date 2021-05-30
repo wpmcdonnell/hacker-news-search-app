@@ -6,18 +6,22 @@ class History extends Component {
     super(props)
 
     this.state = {
-      button: 5
+      pastSearches: []
     }
   }
 
   componentDidMount () {
+    for (let i = 0; i < localStorage.length; i++) {
+      console.log(localStorage.getItem(localStorage.key(i)))
+    }
   }
 
   render () {
+    console.log(localStorage)
     return (
       <Fragment>
         <div>
-          <p>History </p>
+          <p>{this.state.pastSearches}</p>
         </div>
       </Fragment>
     )
