@@ -23,6 +23,9 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentDidMount () {
+  }
+
   handleChange = (event) => {
     event.persist()
     this.setState({ searchBarInput: event.target.value })
@@ -43,6 +46,7 @@ class Search extends Component {
       })
       .then(window.scrollTo(0, 0))
       .catch(console.error)
+      .then(setTimeout(this.props.history.push('/history')), 3000)
   }
 
   handleSubmitComment= () => {
@@ -79,7 +83,7 @@ class Search extends Component {
   }
 
   render () {
-    console.log('seeing if this renders twice -- pageparams', this.state.pageParams)
+    console.log(this.props)
     let resultJSX = []
 
     if (this.state.searched && !this.state.commentJSX && this.state.result.toString() !== [].toString()) {
