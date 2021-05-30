@@ -21,8 +21,7 @@ class Search extends Component {
       dateButton: 'all',
       commentJSX: false,
       timeParams: 0,
-      pageParams: 0,
-      searchStorageCounter: 0
+      pageParams: 0
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -50,8 +49,8 @@ class Search extends Component {
         console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
+      .then(sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched ${this.state.searchBarInput} in ${this.state.button} from ${this.state.dateButton} time `))
       .then(this.props.searchStorageCounterFunction())
-      .then(localStorage.setItem(`Search + ${this.state.searchStorageCounter}`, `Searched ${this.state.searchBarInput} in ${this.state.button} from ${this.state.dateButton} time `))
       .catch(console.error)
   }
 
@@ -69,7 +68,6 @@ class Search extends Component {
         console.log(this.state.result)
       })
       .then(window.scrollTo(0, 0))
-      .then(localStorage.setItem('dude', 'mark'))
       .catch(console.error)
   }
 

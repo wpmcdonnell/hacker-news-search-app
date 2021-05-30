@@ -12,23 +12,28 @@ class History extends Component {
 
   componentDidMount () {
     const searches = []
-    const keys = Object.keys(localStorage)
+    const keys = Object.keys(sessionStorage)
     let i = keys.length
 
     while (i--) {
-      searches.push(localStorage.getItem(keys[i]))
+      searches.push(sessionStorage.getItem(keys[i]))
     }
     this.setState({ pastSearches: searches })
   }
 
+  clearSearches = () => {
+    sessionStorage.clear()
+    this.setState({ pastSearches: [] })
+  }
+
   render () {
-    console.log(this.state.pastSearches)
-    console.log(this.props.location.data)
+    console.log(sessionStorage)
     return (
       <Fragment>
         <div>
           <h2> User past searches</h2>
-          <div>{this.state.pastSearches.map(item => <p key={item}>{item}</p>)}</div>
+          <div>{this.state.pastSearches.map(item => <p key={item}>{item}</p>)} </div>
+          <button onClick={this.clearSearches}> Clear Searches</button>
         </div>
       </Fragment>
     )
