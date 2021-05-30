@@ -18,6 +18,12 @@ class App extends Component {
     this.setState({ searchStorageCounter: this.state.searchStorageCounter + 1 })
   }
 
+  componentDidMount () {
+    if (window.performance.navigation.type === 1) {
+      sessionStorage.clear()
+    }
+  }
+
   render () {
     return (
       <Fragment>
