@@ -137,6 +137,7 @@ class Search extends Component {
           </div>)}
         </div>
       )
+    // Map JSX if searching on comments, comments have different layout
     } else if (this.state.searched && this.state.commentJSX && this.state.result.toString() !== [].toString()) {
       resultJSX = (
         <div>
