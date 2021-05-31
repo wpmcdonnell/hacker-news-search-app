@@ -61,6 +61,7 @@ class Search extends Component {
       })
       .then(window.scrollTo(0, 0))
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `) } })
+      .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
   }
 
@@ -76,6 +77,7 @@ class Search extends Component {
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `) } })
+      .then(this.props.searchStorageCounterFunction())
       .then(window.scrollTo(0, 0))
 
       .catch(console.error)
