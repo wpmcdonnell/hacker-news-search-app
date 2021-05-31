@@ -35,7 +35,7 @@ class Search extends Component {
 
   handleSubmit = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=60&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
+      url: `https://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=60&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -51,7 +51,7 @@ class Search extends Component {
 
   handleSubmitComment= () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=comment&hitsPerPage=35&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
+      url: `https://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=comment&hitsPerPage=35&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -66,7 +66,7 @@ class Search extends Component {
 
   handleSubmitAuthor = () => {
     axios({
-      url: `http://hn.algolia.com/api/v1/search?tags=story,author_${this.state.searchBarInput}&hitsPerPage=50&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
+      url: `https://hn.algolia.com/api/v1/search?tags=story,author_${this.state.searchBarInput}&hitsPerPage=50&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
       .then(response => {

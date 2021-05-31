@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 import Header from './components/Header/Header'
 import Search from './components/Search/Search'
 import History from './components/History/History'
+import About from './components/About/About'
 
 class App extends Component {
   constructor (props) {
@@ -29,6 +30,9 @@ class App extends Component {
       <Fragment>
         <Header/>
         <main className="container">
+          <Route exact path='/' render={() => (
+            <About />
+          )} />
           <Route path='/search' render={() => (
             <Search searchStorageCounterFunction={this.searchStorageCounterFunction} searchStorageCounterParentState={this.state.searchStorageCounter} />
           )} />
