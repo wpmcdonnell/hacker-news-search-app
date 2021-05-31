@@ -10,7 +10,7 @@ class Search extends Component {
   constructor () {
     super()
 
-    // states to toggle search query types and to set coditionals for localStorage sets
+    // states to toggle search query types and to set coditionals for sessionStorage sets
     this.state = {
       // holds data from axios request query
       result: [],
@@ -24,8 +24,8 @@ class Search extends Component {
       commentJSX: false,
       timeParams: 0,
       pageParams: 0,
-      // newPageRequest set to false for localStorage conditional
-      // if set to false, it will allow setItem to local storage
+      // newPageRequest set to false for sessionStorage conditional
+      // if set to false, it will allow setItem to session storage
       // so a search isnt saved every time you toggle a nbPage
       newPageRequest: false,
       searchSortBy: 'search?query',
@@ -34,7 +34,7 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  // set counter state which names variable in local storage, via the props from the counter in app
+  // set counter state which names variable in session storage, via the props from the counter in app
   componentDidMount () {
     this.setState({ searchStorageCounter: this.props.searchStorageCounterParentState })
   }
@@ -59,8 +59,14 @@ class Search extends Component {
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
       .then(window.scrollTo(0, 0))
+      // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
-      .then(this.props.searchStorageCounterFunction())
+      // Triggers saved search counter in parent App component
+      .then(() => {
+        if (this.state.newPageRequest === false) {
+          this.props.searchStorageCounterFunction()
+        }
+      })
       .catch(console.error)
   }
 
@@ -70,11 +76,10 @@ class Search extends Component {
       method: 'GET'
     })
       .then(response => {
-        // axios response object contains a `data` key
-        // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: true, pageParams: 0 })
       })
       .then(window.scrollTo(0, 0))
+      // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}... `) } })
       .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
@@ -86,11 +91,9 @@ class Search extends Component {
       method: 'GET'
     })
       .then(response => {
-        // axios response object contains a `data` key
-        // { data: { post: { title... }}}
-        // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
+      // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
       .then(this.props.searchStorageCounterFunction())
       .then(window.scrollTo(0, 0))
@@ -162,8 +165,12 @@ class Search extends Component {
               {this.state.button === 'title' && <button className='ml-2 btn btn-outline-primary' onClick={() => {
                 this.setState({ newPageRequest: false }); this.handleSubmit()
               }}>Get search</button>}
-              {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
-              {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitAuthor}>Get search</button>}
+              {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={() => {
+                this.setState({ newPageRequest: false }); this.handleSubmitComment()
+              }}>Get search</button>}
+              {this.state.button === 'author' && <button className='ml-2 btn btn-outline-primary' onClick={() => {
+                this.setState({ newPageRequest: false }); this.handleSubmitAuthor()
+              }}>Get search</button>}
             </form>
 
             <div className='d-inline mt-2'>
@@ -241,11 +248,12 @@ class Search extends Component {
             <div className='mb-4'>{resultJSX}</div>
             {this.state.searched && this.state.result.hits.toString() === [].toString() ? 'No Matches for your search! TRY AGAIN!' : ''}
 
+            {/* Conditional to show pagination if search has been performed and has results and multiple pages */}
             <div className='ml-1 mr-1 mb-5'>
               {this.state.searched && this.state.result.nbPages !== 1 && this.state.result.hits.toString() !== [].toString() ? <p className='pagination-title d-flex justify-content-center'>pages</p> : '' }
               <nav aria-label="Page navigation example" >
                 <ul className="pagination">
-
+                  {/* Map out page results to toggle / pagination allows for user to move to seperate page */}
                   {this.state.searched && this.state.result.nbPages > 1 ? Array.from(Array(this.state.result.nbPages).keys()).map(result => <li className="page-item flex-wrap ml-1 mr-1 mb-1" key={result}><a onClick={async () => {
                     await this.setState({ pageParams: result, newPageRequest: true }); if (this.state.button === 'title') { this.handleSubmit() } else if (this.state.button === 'comment') { this.handleSubmitComment() } else if (this.state.button === 'author') { this.handleSubmitAuthor() }
                   } }

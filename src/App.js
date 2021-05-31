@@ -16,14 +16,18 @@ class App extends Component {
     }
   }
 
+  // if triggered from axios request from submit in child /Search components
+  // Will add 1 to counter
   searchStorageCounterFunction () {
     this.setState({ searchStorageCounter: this.state.searchStorageCounter + 1 })
   }
 
+  // If triggered from child /History component, will set counter back to 0
   clearSearchStorageCounter () {
     this.setState({ searchStorageCounter: 0 })
   }
 
+  // On mount, checks to see if page has been refreshed, if so, it clears this.state.pastSearches
   componentDidMount () {
     if (window.performance.navigation.type === 1) {
       sessionStorage.clear()

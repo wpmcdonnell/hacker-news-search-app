@@ -10,12 +10,14 @@ class History extends Component {
     }
   }
 
+  // On mount, checks to see if page has been refreshed, if so, it clears this.state.pastSearches
   componentDidMount () {
     if (window.performance.navigation.type === 1) {
       this.setState({ pastSearches: [] })
     }
   }
 
+  // clear sessionStorage
   clearSearches = () => {
     sessionStorage.clear()
     this.setState({ pastSearches: [] })
