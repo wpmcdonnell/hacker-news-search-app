@@ -24,7 +24,7 @@ class App extends Component {
 
   // If triggered from child /History component, will set counter back to 0
   clearSearchStorageCounter () {
-    this.setState({ searchStorageCounter: 0 })
+    this.setState({ searchStorageCounter: 1 })
   }
 
   // On mount, checks to see if page has been refreshed, if so, it clears this.state.pastSearches

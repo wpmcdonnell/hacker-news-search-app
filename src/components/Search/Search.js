@@ -58,10 +58,11 @@ class Search extends Component {
         // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
+      // scroll to top of page
       .then(window.scrollTo(0, 0))
       // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
-      // Triggers saved search counter in parent App component
+      // Add to parent storageCounter if axios request is coming from search, not new page
       .then(() => {
         if (this.state.newPageRequest === false) {
           this.props.searchStorageCounterFunction()
@@ -69,7 +70,7 @@ class Search extends Component {
       })
       .catch(console.error)
   }
-
+  // axios request for comments
   handleSubmitComment= () => {
     axios({
       url: `https://hn.algolia.com/api/v1/${this.state.searchSortBy}=${this.state.searchBarInput}&tags=comment&hitsPerPage=35&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
@@ -78,9 +79,11 @@ class Search extends Component {
       .then(response => {
         this.setState({ result: response.data, searched: true, commentJSX: true, pageParams: 0 })
       })
+      // scroll to top of page
       .then(window.scrollTo(0, 0))
       // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}... `) } })
+      // Add to parent storageCounter if axios request is coming from search, not new page
       .then(() => {
         if (this.state.newPageRequest === false) {
           this.props.searchStorageCounterFunction()
@@ -88,7 +91,7 @@ class Search extends Component {
       })
       .catch(console.error)
   }
-
+  // axios request for author
   handleSubmitAuthor = () => {
     axios({
       url: `https://hn.algolia.com/api/v1/search?tags=story,author_${this.state.searchBarInput}&hitsPerPage=50&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
@@ -99,11 +102,13 @@ class Search extends Component {
       })
       // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
+      // Add to parent storageCounter if axios request is coming from search, not new page
       .then(() => {
         if (this.state.newPageRequest === false) {
           this.props.searchStorageCounterFunction()
         }
       })
+      // scroll to top of page
       .then(window.scrollTo(0, 0))
 
       .catch(console.error)
@@ -254,7 +259,7 @@ class Search extends Component {
               </div>
             </div>
             <div className='mb-4'>{resultJSX}</div>
-            {this.state.searched && this.state.result.hits.toString() === [].toString() ? 'No Matches for your search! TRY AGAIN!' : ''}
+            {this.state.searched && this.state.result.hits.toString() === [].toString() ? 'No matches for your search! TRY AGAIN!' : ''}
 
             {/* Conditional to show pagination if search has been performed and has results and multiple pages */}
             <div className='ml-1 mr-1 mb-5'>
