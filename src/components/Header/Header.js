@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 
 const options = (
   <Fragment>
-    <Nav.Link href="#/">About</Nav.Link>
+    <Nav.Link href="?#/">About</Nav.Link>
     <Nav.Link href="#search">Search</Nav.Link>
     <Nav.Link href="#history">History</Nav.Link>
   </Fragment>
