@@ -10,7 +10,7 @@ class About extends Component {
       alignItems: 'center',
       color: 'Black',
       textAlign: 'center',
-      marginTop: '8rem',
+      marginTop: '5rem',
       justifyContent: 'center'
     }
 
@@ -21,8 +21,11 @@ class About extends Component {
     return (
       <div style={backgroundStyle} className="about mx-auto">
         <div>
-          <h2 className=''>Welcome to HACKER NEWS SEARCH APP </h2>
-          <h5 className=''> <Link className='text-dark' to={'/sign-in/'}>Sign in</Link> or <Link className='text-dark' to={'/sign-up/'}>Sign up</Link></h5>
+          <h2 className=''>Welcome to </h2>
+          <h2 className='mb-3'>HACKER NEWS SEARCH APP </h2>
+          <p> Hacker News Search app is a place where users may search for articles by title, comments, or author, as well as time. </p>
+          <p> Please click the links below or the items in the nav bar to search or see your history. </p>
+          <h5 className='mt-4'> <Link className='text-primary' to={'/search'}>Search</Link> or <Link className='text-primary' to={'/history'}>History</Link></h5>
           <h5 className='mr-2 ml-2'>to access message board</h5>
         </div>
       </div>
