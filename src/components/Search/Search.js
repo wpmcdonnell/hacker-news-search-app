@@ -19,6 +19,9 @@ class Search extends Component {
       commentJSX: false,
       timeParams: 0,
       pageParams: 0,
+      // newPageRequest set to false for localStorage conditional
+      // if set to false, it will allow setItem to local storage
+      // so a search isnt saved every time you toggle a nbPage
       newPageRequest: false,
       searchSortBy: 'search?query',
       searchSortDisplay: 'Popularity'
@@ -26,20 +29,25 @@ class Search extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  // set counter state which names variable in local storage, via the props from the counter in app
   componentDidMount () {
     this.setState({ searchStorageCounter: this.props.searchStorageCounterParentState })
   }
 
+  // changes search bar input state on every keystroke and re-renders page to display text
   handleChange = (event) => {
     event.persist()
     this.setState({ searchBarInput: event.target.value })
   }
 
+  // axios request to query by title
+  //  contains state variables to specify search
   handleSubmit = () => {
     axios({
       url: `https://hn.algolia.com/api/v1/${this.state.searchSortBy}=${this.state.searchBarInput}&tags=story&hitsPerPage=60&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
+      // adds data to state.result and sets other state variables to toggle correct axios request and reset page params back to 0 for new search querying first nbPage
       .then(response => {
         // axios response object contains a `data` key
         // setting the state will force a re-render
@@ -97,8 +105,8 @@ class Search extends Component {
             <Card className='mt-2 mb-3 shadow bg-white rounded'>
               <Card.Body className=''>
                 <Card.Title>
-                  {result.url === '' ? <p>{result.title} (source unavailble)</p> : '' }
-                  <a href={result.url}>{result.url !== '' ? result.title : '' }</a>
+                  {result.url === ('' || null) ? <p>{result.title} <em>(source unavailble) </em></p> : '' }
+                  <a href={result.url}>{result.url !== ('' || null) ? result.title : '' }</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>
                 </Card.Title>
