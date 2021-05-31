@@ -235,6 +235,7 @@ class Search extends Component {
               </div>
             </div>
             <div className='mb-4'>{resultJSX}</div>
+            {this.state.searched && this.state.result.hits.toString() === [].toString() ? 'No Matches for your search! TRY AGAIN!' : ''}
 
             <div className='ml-1 mr-1 mb-5'>
               {this.state.searched && this.state.result.nbPages !== 1 && this.state.result.hits.toString() !== [].toString() ? <p className='pagination-title d-flex justify-content-center'>pages</p> : '' }
