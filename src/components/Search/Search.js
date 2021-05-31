@@ -19,7 +19,9 @@ class Search extends Component {
       commentJSX: false,
       timeParams: 0,
       pageParams: 0,
-      newPageRequest: false
+      newPageRequest: false,
+      searchSortBy: 'search?query',
+      searchSortDisplay: 'Popularity'
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -35,7 +37,7 @@ class Search extends Component {
 
   handleSubmit = () => {
     axios({
-      url: `https://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=story&hitsPerPage=60&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
+      url: `https://hn.algolia.com/api/v1/${this.state.searchSortBy}=${this.state.searchBarInput}&tags=story&hitsPerPage=60&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -51,7 +53,7 @@ class Search extends Component {
 
   handleSubmitComment= () => {
     axios({
-      url: `https://hn.algolia.com/api/v1/search?query=${this.state.searchBarInput}&tags=comment&hitsPerPage=35&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
+      url: `https://hn.algolia.com/api/v1/${this.state.searchSortBy}=${this.state.searchBarInput}&tags=comment&hitsPerPage=35&numericFilters=created_at_i>${this.state.timeParams}&page=${this.state.pageParams}`,
       method: 'GET'
     })
       .then(response => {
@@ -155,7 +157,7 @@ class Search extends Component {
             <div className='d-inline mt-2'>
               <p className='search-instruction-text d-inline mr-3'>Search by</p>
 
-              <Dropdown className=' d-inline'>
+              <Dropdown className='d-inline'>
                 {this.state.button === 'comment' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
                   Comment
                 </Dropdown.Toggle> : '' }
@@ -177,7 +179,7 @@ class Search extends Component {
 
               <p className='search-instruction-text d-inline ml-3 mr-3'>from</p>
 
-              <Dropdown className=' d-inline'>
+              <Dropdown className='d-inline'>
                 {this.state.dateButton === 'all' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
                 Forever
                 </Dropdown.Toggle> : '' }
@@ -195,6 +197,23 @@ class Search extends Component {
                 </Dropdown.Menu>
 
               </Dropdown>
+
+              {this.state.button !== 'author' ? <p className='search-instruction-text d-inline ml-3 mr-3'>and sort by</p> : '' }
+
+              {this.state.button !== 'author' ? <Dropdown className=' d-inline'>
+                {this.state.searchSortDisplay === 'Popularity' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Popularity
+                </Dropdown.Toggle> : '' }
+                {this.state.searchSortDisplay === 'Date' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                Date
+                </Dropdown.Toggle> : '' }
+
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => this.setState({ searchSortDisplay: 'Popularity', searchSortBy: 'search?query' })} href="#/search">Popularity</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ searchSortDisplay: 'Date', searchSortBy: 'search_by_date?query' })} href="#/search">Date</Dropdown.Item>
+                </Dropdown.Menu>
+
+              </Dropdown> : ' '}
 
             </div>
 
