@@ -25,9 +25,9 @@ class History extends Component {
     return (
       <Fragment>
         <div>
-          <h2 className='d-flex justify-content-center mt-3'> User past searches</h2>
+          <h2 className='d-flex justify-content-center mt-3 mb-3'> User Past Searches</h2>
           <div>{this.state.pastSearches.map((item, index) => <p className='d-flex justify-content-center' key={index}>{item}</p>)} </div>
-          {this.state.pastSearches.toString() !== [].toString() ? <button className='btn-primary mt-2 mb-5 justify-content-center' onClick={this.clearSearches}> Clear Searches</button> : 'You have no search history!' }
+          {this.state.pastSearches.toString() !== [].toString() ? <button className='btn-primary mt-2 mb-5 ml-5 d-flex justify-content-center' onClick={this.clearSearches}> Clear Searches</button> : <p className='d-flex justify-content-center'> You have no search history! </p> }
         </div>
       </Fragment>
     )
