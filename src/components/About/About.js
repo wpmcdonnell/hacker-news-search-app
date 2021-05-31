@@ -16,7 +16,7 @@ class About extends Component {
         <div>
           <h2 className=''>Welcome to </h2>
           <h2 className='mb-3'>HACKER NEWS SEARCH APP </h2>
-          <p> <em>Hacker News Search App</em> is a place where users may search for articles by title, comments, or author, as well as time. </p>
+          <p> <em>Hacker News Search App</em> is a place where users may search for articles by title, comments, author, or time frame! </p>
           <p> Please click the links below or the items in the nav bar to search or see your history. </p>
           <h5 className='mt-4'> <a className='text-primary' href="?#search">Search</a> or <a className='text-primary' href="?#history">History</a></h5>
         </div>
