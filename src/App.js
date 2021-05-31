@@ -12,7 +12,7 @@ class App extends Component {
     this.searchStorageCounterFunction = this.searchStorageCounterFunction.bind(this)
     this.clearSearchStorageCounter = this.clearSearchStorageCounter.bind(this)
     this.state = {
-      searchStorageCounter: 0
+      searchStorageCounter: 1
     }
   }
 

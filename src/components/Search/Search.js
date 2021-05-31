@@ -81,7 +81,11 @@ class Search extends Component {
       .then(window.scrollTo(0, 0))
       // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}... `) } })
-      .then(this.props.searchStorageCounterFunction())
+      .then(() => {
+        if (this.state.newPageRequest === false) {
+          this.props.searchStorageCounterFunction()
+        }
+      })
       .catch(console.error)
   }
 
@@ -95,7 +99,11 @@ class Search extends Component {
       })
       // sets search item in sessionSotrage
       .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
-      .then(this.props.searchStorageCounterFunction())
+      .then(() => {
+        if (this.state.newPageRequest === false) {
+          this.props.searchStorageCounterFunction()
+        }
+      })
       .then(window.scrollTo(0, 0))
 
       .catch(console.error)
@@ -112,7 +120,7 @@ class Search extends Component {
             <Card className='mt-2 mb-3 shadow bg-white rounded'>
               <Card.Body className=''>
                 <Card.Title>
-                  {result.url === ('' || null) ? <p>{result.title} <em>(source unavailble) </em></p> : '' }
+                  {result.url === ('' || null) ? <p>{result.title} <em>(source unavailable) </em></p> : '' }
                   <a href={result.url}>{result.url !== ('' || null) ? result.title : '' }</a>
                   <br/>
                   <a className='url' href={result.url}>{result.url}</a>

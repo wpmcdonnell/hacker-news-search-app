@@ -1,18 +1,17 @@
 @import '~bootstrap/scss/bootstrap';
 
-
-.main-title {
-  font-size: 30px;
-  margin-top: 1em;
-  font-weight: bold;
-}
-
 .comment-header-text {
   color: grey;
   font-size: 10px;
 }
 
 .comment-story-link {
+  font-weight: bold;
+}
+
+.main-title {
+  font-size: 30px;
+  margin-top: 1em;
   font-weight: bold;
 }
 
