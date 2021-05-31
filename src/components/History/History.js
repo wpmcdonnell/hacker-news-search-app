@@ -7,6 +7,7 @@ class History extends Component {
 
     this.state = {
       // Add sessionStorage to state, sort by value, and then reverse for latest search on top
+      // sort by first two characters in string, turn into number then compare and reverse order
       pastSearches: Object.values(sessionStorage).sort((a, b) => Number(a.substring(0, 2)) - b.substring(0, 2)).reverse()
     }
   }
@@ -27,7 +28,6 @@ class History extends Component {
   }
 
   render () {
-    console.log(Object.values(sessionStorage))
     return (
       <Fragment>
         <div>
