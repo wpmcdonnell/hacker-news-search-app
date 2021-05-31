@@ -14,7 +14,7 @@ class Search extends Component {
       result: [],
       search: false,
       searchBarInput: '',
-      button: 'story',
+      button: 'title',
       dateButton: 'all',
       commentJSX: false,
       timeParams: 0,
@@ -44,7 +44,7 @@ class Search extends Component {
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
       .then(window.scrollTo(0, 0))
-      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ${this.state.searchBarInput} in article ${this.state.button} from ${this.state.dateButton} time `) } })
+      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}... time `) } })
       .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
   }
@@ -142,7 +142,7 @@ class Search extends Component {
               />
 
               {/* Show corresponding button to correct axios request for either author, title, or comment given this.state.button */}
-              {this.state.button === 'story' && <button className='ml-2 btn btn-outline-primary' onClick={() => {
+              {this.state.button === 'title' && <button className='ml-2 btn btn-outline-primary' onClick={() => {
                 this.setState({ newPageRequest: false }); this.handleSubmit()
               }}>Get search</button>}
               {this.state.button === 'comment' && <button className='ml-2 btn btn-outline-primary' onClick={this.handleSubmitComment}>Get search</button>}
@@ -157,7 +157,7 @@ class Search extends Component {
                   Comment
                 </Dropdown.Toggle> : '' }
 
-                {this.state.button === 'story' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                {this.state.button === 'title' ? <Dropdown.Toggle variant="primary" id="dropdown-basic">
                   Title
                 </Dropdown.Toggle> : '' }
 
@@ -166,7 +166,7 @@ class Search extends Component {
                 </Dropdown.Toggle> : '' }
 
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => this.setState({ button: 'story' })} href="#/search">Title</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({ button: 'title' })} href="#/search">Title</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({ button: 'comment' })} href="#/search">Comment</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({ button: 'author' })} href="#/search">Author</Dropdown.Item>
                 </Dropdown.Menu>
@@ -198,7 +198,7 @@ class Search extends Component {
             <div className="mt-4 mb-4">
               <div className="">
                 <div className="tab-content" id="nav-tabContent">
-                  <div className={this.state.button === 'story' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with headlines containing your search word!</div>
+                  <div className={this.state.button === 'title' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with headlines containing your search word!</div>
                   <div className={this.state.button === 'comment' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles with comments containing your search word!</div>
                   <div className={this.state.button === 'author' ? 'tab-pane fade show active' : 'tab-pane fade' } role="tabpanel">Search articles by author!</div>
                 </div>
@@ -212,7 +212,7 @@ class Search extends Component {
                 <ul className="pagination">
 
                   {this.state.searched && this.state.result.nbPages > 1 ? Array.from(Array(this.state.result.nbPages).keys()).map(result => <li className="page-item flex-wrap ml-1 mr-1 mb-1" key={result}><a onClick={async () => {
-                    await this.setState({ pageParams: result, newPageRequest: true }); if (this.state.button === 'story') { this.handleSubmit() } else if (this.state.button === 'comment') { this.handleSubmitComment() } else if (this.state.button === 'author') { this.handleSubmitAuthor() }
+                    await this.setState({ pageParams: result, newPageRequest: true }); if (this.state.button === 'title') { this.handleSubmit() } else if (this.state.button === 'comment') { this.handleSubmitComment() } else if (this.state.button === 'author') { this.handleSubmitAuthor() }
                   } }
                   className="page-link" href="#/search">{result + 1}</a></li>) : '' }
 

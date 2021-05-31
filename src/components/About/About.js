@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-//  impoort out axios request to get all mocies
+
 class About extends Component {
   render () {
     // const backgroundImageUrl = <img src="nlbg.jpg" alt='Somewhere in Japan'>
@@ -25,7 +24,7 @@ class About extends Component {
           <h2 className='mb-3'>HACKER NEWS SEARCH APP </h2>
           <p> Hacker News Search app is a place where users may search for articles by title, comments, or author, as well as time. </p>
           <p> Please click the links below or the items in the nav bar to search or see your history. </p>
-          <h5 className='mt-4'> <Link className='text-primary' to={'/search'}>Search</Link> or <Link className='text-primary' to={'/history'}>History</Link></h5>
+          <h5 className='mt-4'> <a className='text-primary' href="?#search">Search</a> or <a className='text-primary' href="?#history">History</a></h5>
         </div>
       </div>
     )
