@@ -6,7 +6,7 @@ class History extends Component {
     super(props)
 
     this.state = {
-      pastSearches: Object.values(sessionStorage).sort()
+      pastSearches: Object.values(sessionStorage).sort().reverse()
     }
   }
 
@@ -19,6 +19,7 @@ class History extends Component {
   clearSearches = () => {
     sessionStorage.clear()
     this.setState({ pastSearches: [] })
+    this.props.clearSearchStorageCounter()
   }
 
   render () {

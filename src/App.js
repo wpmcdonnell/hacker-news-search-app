@@ -10,13 +10,18 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.searchStorageCounterFunction = this.searchStorageCounterFunction.bind(this)
+    this.clearSearchStorageCounter = this.clearSearchStorageCounter.bind(this)
     this.state = {
-      searchStorageCounter: 1
+      searchStorageCounter: 0
     }
   }
 
   searchStorageCounterFunction () {
     this.setState({ searchStorageCounter: this.state.searchStorageCounter + 1 })
+  }
+
+  clearSearchStorageCounter () {
+    this.setState({ searchStorageCounter: 0 })
   }
 
   componentDidMount () {
@@ -37,7 +42,7 @@ class App extends Component {
             <Search searchStorageCounterFunction={this.searchStorageCounterFunction} searchStorageCounterParentState={this.state.searchStorageCounter} />
           )} />
           <Route path='/history' render={() => (
-            <History />
+            <History clearSearchStorageCounter={this.clearSearchStorageCounter} />
           )} />
         </main>
       </Fragment>

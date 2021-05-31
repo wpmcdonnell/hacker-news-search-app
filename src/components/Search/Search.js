@@ -54,7 +54,7 @@ class Search extends Component {
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
       .then(window.scrollTo(0, 0))
-      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
+      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
       .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
   }
@@ -70,7 +70,7 @@ class Search extends Component {
         this.setState({ result: response.data, searched: true, commentJSX: true, pageParams: 0 })
       })
       .then(window.scrollTo(0, 0))
-      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}... `) } })
+      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}... `) } })
       .then(this.props.searchStorageCounterFunction())
       .catch(console.error)
   }
@@ -86,7 +86,7 @@ class Search extends Component {
         // setting the state will force a re-render
         this.setState({ result: response.data, searched: true, commentJSX: false, pageParams: 0 })
       })
-      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
+      .then(() => { if (this.state.newPageRequest === false) { sessionStorage.setItem(`${this.props.searchStorageCounterParentState}`, `${this.props.searchStorageCounterParentState} ) You searched for ...${this.state.searchBarInput}... in article ...${this.state.button}... from ...${this.state.dateButton}...`) } })
       .then(this.props.searchStorageCounterFunction())
       .then(window.scrollTo(0, 0))
 
@@ -94,7 +94,6 @@ class Search extends Component {
   }
 
   render () {
-    console.log(this.state.result)
     let resultJSX = []
 
     if (this.state.searched && !this.state.commentJSX && this.state.result.toString() !== [].toString()) {
